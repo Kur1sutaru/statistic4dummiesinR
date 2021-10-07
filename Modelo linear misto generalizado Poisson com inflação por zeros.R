@@ -1,9 +1,9 @@
-## Curso Modelos de regress„o no software R - MÛdulo 2 ##
+## Curso Modelos de regress√£o no software R - M√≥dulo 2 ##
 
 ## Modelos mistos lineares generalizados ##
 
-## A distribuiÁ„o zero inflated Poisson Regression È utilizada quando nÛs temos dados de contagem com uma grande quantidade de zeros
-## Modelos mistos deve ser utilizado quando nÛs temos efeito fixo e aleatÛrio
+## A distribui√ß√£o zero inflated Poisson Regression √© utilizada quando n√≥s temos dados de contagem com uma grande quantidade de zeros
+## Modelos mistos deve ser utilizado quando n√≥s temos efeito fixo e aleat√≥rio
 
 require(glmmTMB)
 require(lme4)
@@ -14,7 +14,7 @@ library(ggplot2)
 library(GGally)
 
 ## Leitura dos dados
-dados<-read.table("C:/Users/hp/OneDrive - Experimental Analytics Corporation/Short course/Modelos de regress„o no software R - MÛdulo 2/dados_contagem_modelos_mistos.csv",h=T,sep=",")
+dados<-read.table("caminhododiretorio/Modelos de regress√£o no software R - M√≥dulo 2/dados_contagem_modelos_mistos.csv",h=T,sep=",")
 
 ## Transformando os efeitos em fatores
 dados <- within(dados, {
@@ -24,7 +24,7 @@ dados <- within(dados, {
   Rep <- factor(Rep)
 })
 
-## An·lise gr·fica
+## An√°lise gr√°fica
 ggpairs(dados[, c("Variedade", "Local", "Ferrugem")])
 
 ggplot(dados, aes(x = Variedade, y = Ferrugem)) +
@@ -39,7 +39,7 @@ ggplot(dados, aes(x = Ano, y = Ferrugem)) +
   stat_sum(aes(size = ..n.., group = 1)) +
   scale_size_area(max_size=10)
 
-# Rodar o modelo de regress„o generalizada com distribuiÁ„o de Poisson
+# Rodar o modelo de regress√£o generalizada com distribui√ß√£o de Poisson
 m <- glmmTMB(Ferrugem~(Variedade+Local)+(1|Ano),
                          data=dados,
                          ziformula=~1,
@@ -55,7 +55,7 @@ summary(m1)
 m2 <- update(m,family=nbinom1)
 summary(m2)
 
-# Calculando o intervalo de confianÁa
+# Calculando o intervalo de confian√ßa
 confint(m)  ## Wald/delta-method CIs
 confint(m,parm="theta_")  ## Wald/delta-method CIs
 confint(m,parm=1,method="profile")
@@ -64,17 +64,17 @@ confint(m,parm=1,method="profile")
 fe<-fixef(m)
 fe
 
-# Extrair efeito aleatÛrio
+# Extrair efeito aleat√≥rio
 rr <- ranef(m)
 rr
 
-# Extrair resÌduo
+# Extrair res√≠duo
 res<-residuals(m)
 res
 sig<-sigma(m)
 sig
 
-# Extrair matriz de vari‚ncia para efeitos aleatÛrio
+# Extrair matriz de vari√¢ncia para efeitos aleat√≥rio
 var<-VarCorr(m)
 var
 
@@ -93,10 +93,10 @@ if (requireNamespace("boot")) {
   boot.ci(b1,type="perc")
 }
 
-# Fazendo prediÁıes
+# Fazendo predi√ß√µes
 predict(m, allow.new.levels=TRUE)
 newdata <- with(dados, expand.grid(Ano=unique(Ano), Variedade=unique(Variedade), Local=unique(Local)))
 predict(m, newdata=newdata, allow.new.levels=TRUE)
 
-# Modelos disponÌveis no pacote glmmTMB
+# Modelos dispon√≠veis no pacote glmmTMB
 getCapabilities(what = "all", check = FALSE)
