@@ -1,9 +1,9 @@
-## Curso Modelos de regress„o no software R - MÛdulo 1 ##
+## Curso Modelos de regress√£o no software R - M√≥dulo 1 ##
 
-## ResoluÁ„o dos exercÌcios de Modelos mistos lineares ##
+## Resolu√ß√£o dos exerc√≠cios de Modelos mistos lineares ##
 
 ## Leitura dos dados
-dados<-read.table("C:/Users/hp/OneDrive - Experimental Analytics Corporation/Short course/Modelos de regress„o no software R - MÛdulo 1/dados.csv",h=T,sep=",")
+dados<-read.table("caminhododiretorio/dados.csv",h=T,sep=",")
 
 library(lme4)
 library(merTools)
@@ -48,21 +48,21 @@ for(i in colnames(dados[-c(1,2)]))
                      modelo4=modelo4,modelo5=modelo5,modelo6=modelo6,
                      modelo7=modelo7,modelo8=modelo8)
   
-  # SeleÁ„o de modelos/vari·veis
+  # Sele√ß√£o de modelos/vari√°veis
   bic<-data.frame(BIC(modelo1,modelo2,modelo3,modelo4,modelo5,modelo6,modelo7,modelo8))
   aic<-AIC(modelo1,modelo2,modelo3,modelo4,modelo5,modelo6,modelo7,modelo8)
   
   modelo_selecionado<-rownames(bic[bic$BIC==min(bic$BIC),])
   
   modelo<-modelo_final[[modelo_selecionado]]
-  ## Calculando o intervalo de confianÁa
+  ## Calculando o intervalo de confian√ßa
   tryCatch({
     intervalo_confianca<-confint(modelo)
   }, error = function(error_condition) {
     intervalo_confianca<-NA
   })
   
-  ## Estimativas dos efeitos aleatÛrios
+  ## Estimativas dos efeitos aleat√≥rios
   efeito_aleatorio<-ranef(modelo) 
   coeficiente_efeito_aleatorio<-coef(modelo) 
   
@@ -72,7 +72,7 @@ for(i in colnames(dados[-c(1,2)]))
   
   plotREsim(REsim(modelo))  # plot the interval estimates
   
-  ## Fazendo prediÁıes
+  ## Fazendo predi√ß√µes
   predicao_sem_efeito_aleatorio<-predict(modelo, re.form=NA)
   predicao_com_efeito_aleatorio<-predict(modelo)
   
@@ -86,11 +86,11 @@ for(i in colnames(dados[-c(1,2)]))
   # Renomeando a coluna do p-value
   colnames(anova.df)[which(colnames(anova.df) == "Pr..F.")] <- "P.value"
   
-  ##Estimando o coeficiente de variaÁ„o CV
+  ##Estimando o coeficiente de varia√ß√£o CV
   anova.df$CV <- (anova.df$Sigma/mean(dados$PROD))*100
   
   tryCatch({
-    ##Calculando os contrastes entre mÈdias dos efeitos fixos
+    ##Calculando os contrastes entre m√©dias dos efeitos fixos
     delta.df<-data.frame(summary(pairs(emmeans::lsmeans(modelo,
                                                         as.formula(~ Trat),
                                                         adjust = "none",
@@ -101,7 +101,7 @@ for(i in colnames(dados[-c(1,2)]))
     colnames(delta.df)[which(colnames(delta.df) == "estimate")] <- "Estimate"
     colnames(delta.df)[which(colnames(delta.df) == "p.value")] <- "P.value"
     
-    # Calculando o intervalo de confianÁa
+    # Calculando o intervalo de confian√ßa
     delta.df$Lower.95.CI <- delta.df$Estimate - qt(p = 1-0.05/2, df = delta.df$DF)*delta.df$SE
     delta.df$Upper.95.CI <- delta.df$Estimate + qt(p = 1-0.05/2, df = delta.df$DF)*delta.df$SE
     delta.df$Lower.90.CI <- delta.df$Estimate - qt(p = 1-0.10/2, df = delta.df$DF)*delta.df$SE
@@ -132,7 +132,7 @@ for(i in colnames(dados[-c(1,2)]))
     # Adicionando o p value para o teste t
     lsmean.df$P.value <- pt(abs(lsmean.df$T.value),df = lsmean.df$DF, lower.tail = F)*2
     
-    # Trocando os n˙meros da coluna Letter.group por letras
+    # Trocando os n√∫meros da coluna Letter.group por letras
     lsmean.df$Letter.Group<-as.character(lsmean.df$Letter.Group)
     lsmean.df$Letter.Group<-gsub(" ","", lsmean.df$Letter.Group, fixed = T)
     lsmean.df <- within(lsmean.df, Letter.Group[Letter.Group == "1"] <- 'a')
@@ -171,11 +171,11 @@ for(i in colnames(dados[-c(1,2)]))
     lsmean.df<-NA
   })
   
-  resultado[[i]]<-list(Vari·vel=i,BIC=bic,AIC=aic,Intervalo_de_confianÁa=intervalo_confianca,
-                       Efeito_aleatÛrio=efeito_aleatorio,Coeficiente_dos_efeitos_aleatÛrios=coeficiente_efeito_aleatorio,
-                       PrediÁ„o_intervalo_de_confianÁa=predicao_intervalo_confianca,MÈtricas_efeitos_aleatÛrios=metricas_efeito_aleatorio,
-                       PrediÁ„o_sem_consider_efeitos_aleatÛrios=predicao_sem_efeito_aleatorio,PrediÁ„o_considerando_efeitos_aleatÛrios=predicao_com_efeito_aleatorio,
+  resultado[[i]]<-list(Vari√°vel=i,BIC=bic,AIC=aic,Intervalo_de_confian√ßa=intervalo_confianca,
+                       Efeito_aleat√≥rio=efeito_aleatorio,Coeficiente_dos_efeitos_aleat√≥rios=coeficiente_efeito_aleatorio,
+                       Predi√ß√£o_intervalo_de_confian√ßa=predicao_intervalo_confianca,M√©tricas_efeitos_aleat√≥rios=metricas_efeito_aleatorio,
+                       Predi√ß√£o_sem_consider_efeitos_aleat√≥rios=predicao_sem_efeito_aleatorio,Predi√ß√£o_considerando_efeitos_aleat√≥rios=predicao_com_efeito_aleatorio,
                        ANOVA=anova.df,Contraste=delta.df,Lsmean=lsmean.df)
 }
 
-capture.output(resultado, file = "C:/Users/hp/OneDrive - Experimental Analytics Corporation/Short course/Modelos de regress„o no software R - MÛdulo 1/Resultado_modelos_mistos.txt")
+capture.output(resultado, file = "caminhododiretorio/Resultado_modelos_mistos.txt")
