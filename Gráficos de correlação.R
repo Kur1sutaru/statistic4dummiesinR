@@ -1,8 +1,8 @@
-## Curso Modelos de regress„o no software R - MÛdulo 1 ##
-## Gr·ficos de correlaÁ„o ##
+## Curso Modelos de regress√£o no software R - M√≥dulo 1 ##
+## Gr√°ficos de correla√ß√£o ##
 
 ## Leitura dos dados
-dados<-read.table("C:/Users/hp/OneDrive - Experimental Analytics Corporation/Short course/Modelos de regress„o no software R - MÛdulo 1/dados.csv",h=T,sep=",")
+dados<-read.table("caminhododiretorio/Modelos de regress√£o no software R - M√≥dulo 1/dados.csv",h=T,sep=",")
 dados1<-dados[,c(-2)]
 
 library(PerformanceAnalytics)
