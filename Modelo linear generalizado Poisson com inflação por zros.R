@@ -1,20 +1,20 @@
-## Curso Modelos de regressão no software R - Módulo 2 ##
+## Curso Modelos de regressÃ£o no software R - MÃ³dulo 2 ##
 
 ## Modelos lineares generalizados ##
 
-## Distribuição de zero-inflated Poisson regression
-## Em alguns casos nós trabalhamos com valores de contagem que contêm uma quantidade muito grande de zeros
-## Neste caso não é recomendado o uso da distribuição de Poisson ou quasiPoisson
-## Recomenda-se o uso da distribuição zero-inflated Poisson
+## DistribuiÃ§Ã£o de zero-inflated Poisson regression
+## Em alguns casos nÃ³s trabalhamos com valores de contagem que contÃªm uma quantidade muito grande de zeros
+## Neste caso nÃ£o Ã© recomendado o uso da distribuiÃ§Ã£o de Poisson ou quasiPoisson
+## Recomenda-se o uso da distribuiÃ§Ã£o zero-inflated Poisson
 
 require(ggplot2)
 require(pscl)
 require(boot)
 
 ## Leitura dos dados
-dados<-read.table("C:/Users/hp/OneDrive - Experimental Analytics Corporation/Short course/Modelos de regressão no software R - Módulo 2/dados_contagem_com_zeros.csv",h=T,sep=",")
+dados<-read.table("caminhododiretorio/Modelos de regressÃ£o no software R - MÃ³dulo 2/dados_contagem_com_zeros.csv",h=T,sep=",")
 
-## Vizualização dos dados
+## VizualizaÃ§Ã£o dos dados
 ## Histograma onde no eixo x temos uma escala de log10 
 ggplot(dados, aes(Plantas_infectadas)) + geom_histogram() + scale_x_log10()
 
@@ -26,7 +26,7 @@ mnull <- update(m1, . ~ 1)
 
 pchisq(2 * (logLik(m1) - logLik(mnull)), df = 1, lower.tail = FALSE)
 
-## Rodando o modelo com distribuição de Poisson
+## Rodando o modelo com distribuiÃ§Ã£o de Poisson
 summary(p1 <- glm(Plantas_infectadas ~ Tratamento, family = poisson, data = dados))
 
 ## Comparando os modelos
