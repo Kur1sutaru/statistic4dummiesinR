@@ -1,9 +1,9 @@
-## Curso Modelos de regress„o no software R - MÛdulo 2 ##
+## Curso Modelos de regress√£o no software R - M√≥dulo 2 ##
 
 ## Modelos mistos lineares generalizados ##
 
-## A distribuiÁ„o de Poisson È utilizada quando nÛs temos dados de contagem
-## Modelos mistos deve ser utilizado quando nÛs temos efeito fixo e aleatÛrio
+## A distribui√ß√£o de Poisson √© utilizada quando n√≥s temos dados de contagem
+## Modelos mistos deve ser utilizado quando n√≥s temos efeito fixo e aleat√≥rio
 
 require(ggplot2)
 require(GGally)
@@ -11,7 +11,7 @@ require(lme4)
 require(parallel)
 
 ## Leitura dos dados
-dados<-read.table("C:/Users/hp/OneDrive - Experimental Analytics Corporation/Short course/Modelos de regress„o no software R - MÛdulo 2/dados_contagem_modelos_mistos.csv",h=T,sep=",")
+dados<-read.table("caminhododiretorio/Modelos de regress√£o no software R - M√≥dulo 2/dados_contagem_modelos_mistos.csv",h=T,sep=",")
 
 ## Transformando os efeitos em fatores
 dados <- within(dados, {
@@ -21,7 +21,7 @@ dados <- within(dados, {
   Rep <- factor(Rep)
 })
 
-## An·lise gr·fica
+## An√°lise gr√°fica
 ggpairs(dados[, c("Variedade", "Local", "N_lagartas")])
 
 ggplot(dados, aes(x = Variedade, y = N_lagartas)) +
@@ -36,13 +36,13 @@ ggplot(dados, aes(x = Ano, y = N_lagartas)) +
   stat_sum(aes(size = ..n.., group = 1)) +
   scale_size_area(max_size=10)
 
-# Rodar o modelo de regress„o generalizada com distribuiÁ„o de Poisson
+# Rodar o modelo de regress√£o generalizada com distribui√ß√£o de Poisson
 m <- glmer(N_lagartas ~ Variedade + Local + (1 | Ano), data = dados, family = poisson, control = glmerControl(optimizer = "bobyqa"),
            nAGQ = 10)
 
 print(m, corr = FALSE)
 
-# Calculando o intervalo de confianÁa
+# Calculando o intervalo de confian√ßa
 se <- sqrt(diag(vcov(m)))
 # table of estimates with 95% CI
 (tab <- cbind(Est = fixef(m), LL = fixef(m) - 1.96 * se, UL = fixef(m) + 1.96 *
@@ -93,7 +93,7 @@ start <- proc.time()
 res <- parLapplyLB(cl, X = levels(bigdata$Replicate), fun = myboot)
 end <- proc.time()
 
-# Calcula a proporÁ„o de modelos que convergiram calculate proportion of models that successfully converged
+# Calcula a propor√ß√£o de modelos que convergiram calculate proportion of models that successfully converged
 success <- sapply(res, is.numeric)
 mean(success)
 
@@ -109,7 +109,7 @@ finaltable <- cbind(Est = c(f, r), SE = c(se, NA), BootMean = rowMeans(bigres),
 # round and print
 round(finaltable, 3)
 
-# Fazendo prediÁıes
+# Fazendo predi√ß√µes
 str(p0 <- predict(m))            # fitted values
 str(p1 <- predict(m,re.form=NA))  # fitted values, unconditional (level-0)
 newdata <- with(dados, expand.grid(Ano=unique(Ano), Variedade=unique(Variedade), Local=unique(Local)))
