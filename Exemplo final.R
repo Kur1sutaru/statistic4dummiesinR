@@ -1,4 +1,4 @@
-## Curso Modelos de regress„o no software R - MÛdulo 2 ##
+## Curso Modelos de regress√£o no software R - M√≥dulo 2 ##
 
 ## Exemplo final ##
 library(ggplot2)
@@ -8,7 +8,7 @@ library(lme4)
 library(glmmTMB)
 
 ## Leitura dos dados
-dados<-read.table("C:/Users/hp/OneDrive - Experimental Analytics Corporation/Short course/Modelos de regress„o no software R - MÛdulo 2/exemplo_final.csv",h=T,sep=",")
+dados<-read.table("caminhododiretorio/exemplo_final.csv",h=T,sep=",")
 
 ## Transformando os efeitos em fatores
 dados <- within(dados, {
@@ -18,7 +18,7 @@ dados <- within(dados, {
   Rep <- factor(Rep)
 })
 
-## An·lise gr·fica
+## An√°lise gr√°fica
 ggpairs(dados[, c("Variedade", "Local", "Resistencia")])
 ggpairs(dados[, c("Variedade", "Local", "Plantas_mortas")])
 ggpairs(dados[, c("Variedade", "Local", "Severidade")])
@@ -61,7 +61,7 @@ ggplot(dados, aes(x = Ano, y = Severidade)) +
   stat_sum(aes(size = ..n.., group = 1)) +
   scale_size_area(max_size=10)
 
-## Testando modelos para ResistÍncia
+## Testando modelos para Resist√™ncia
 m1<-lm(Resistencia~Variedade+ Local + Ano, dados)
 m2<-glm(formula= Resistencia~Variedade+ Local + Ano, data=dados, family=binomial)
 m3<-glm(formula= Resistencia~Variedade+ Local + Ano, data=dados, family=poisson)
