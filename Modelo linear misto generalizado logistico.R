@@ -1,9 +1,9 @@
-## Curso Modelos de regress„o no software R - MÛdulo 2 ##
+## Curso Modelos de regress√£o no software R - M√≥dulo 2 ##
 
 ## Modelos mistos lineares generalizados ##
 
-## A regress„o logistÌca È utilizada quando nÛs temos dados bin·rios (0 e 1)
-## Modelos mistos deve ser utilizado quando nÛs temos efeito fixo e aleatÛrio
+## A regress√£o logist√≠ca √© utilizada quando n√≥s temos dados bin√°rios (0 e 1)
+## Modelos mistos deve ser utilizado quando n√≥s temos efeito fixo e aleat√≥rio
 
 require(ggplot2)
 require(GGally)
@@ -16,7 +16,7 @@ require(lattice)
 require(dplyr)
 
 ## Leitura dos dados
-dados<-read.table("C:/Users/Mateus/Desktop/Curso de regress„o no R/tuberculose-dados-all.csv",h=T,sep=";")
+dados<-read.table("caminhododiretorio/tuberculose-dados-all.csv",h=T,sep=";")
 
 #Renomear GTA
 colnames(dados)[1]<-("GTA")
@@ -25,7 +25,7 @@ colnames(dados)[13]<-("tuberculosis_cat")
 # Remover as GTAS repetidas
 dados<-dados[!duplicated(dados$GTA),]
 
-# Rodar o modelo de regress„o logistica tuberculosis_cat ~ TOTAL.ABATIDOS
+# Rodar o modelo de regress√£o logistica tuberculosis_cat ~ TOTAL.ABATIDOS
 # Transformar em fatores
 
 to.factors<-function(dados, variables){
@@ -46,7 +46,7 @@ predict(modelo, type="response")
 
 predito<-modelo %>%predict(dados, type="response")
 
-# Calculando o intervalo de confianÁa
+# Calculando o intervalo de confian√ßa
 dados <- sqrt(diag(vcov(modelo)))
 dados
 # table of estimates with 95% CI
@@ -100,7 +100,7 @@ start <- proc.time()
 res <- parLapplyLB(cl, X = levels(bigdata$Replicate), fun = myboot)
 end <- proc.time()
 
-# Calcula a proporÁ„o de modelos que convergiram
+# Calcula a propor√ß√£o de modelos que convergiram
 success <- sapply(res, is.numeric)
 mean(success)
 
@@ -116,7 +116,7 @@ finaltable <- cbind(Est = c(f, r), SE = c(se, NA), BootMean = rowMeans(bigres),
 # round and print
 round(finaltable, 3)
 
-# Fazendo prediÁıes
+# Fazendo predi√ß√µes
 str(p0 <- predict(m))            # fitted values
 str(p1 <- predict(m,re.form=NA))  # fitted values, unconditional (level-0)
 newdata <- with(dados, expand.grid(Ano=unique(Ano), Sexo=unique(Sexo), Idade=unique(Idade)))
@@ -136,7 +136,7 @@ predict(modelo2, type="response")
 
 predito<-modelo2 %>%predict(dados, type="response")
 
-# Calculando o intervalo de confianÁa
+# Calculando o intervalo de confian√ßa
 dados <- sqrt(diag(vcov(modelo2)))
 dados
 # table of estimates with 95% CI
