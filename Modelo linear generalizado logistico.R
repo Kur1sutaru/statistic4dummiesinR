@@ -1,21 +1,21 @@
-## Curso Modelos de regress„o no software R - MÛdulo 2 ##
+## Curso Modelos de regress√£o no software R - M√≥dulo 2 ##
 
 ## Modelos lineares generalizados ##
 
-## Modelos lineares s„o utilizados para vari·veis com distribuiÁ„o normal
-## A grande maioria das vari·veis n„o tem distribuiÁ„o normal
-## Para este tipo de vari·veis nÛs precisamos usar os modelos conhecidos como lineares generalizados
+## Modelos lineares s√£o utilizados para vari√°veis com distribui√ß√£o normal
+## A grande maioria das vari√°veis n√£o tem distribui√ß√£o normal
+## Para este tipo de vari√°veis n√≥s precisamos usar os modelos conhecidos como lineares generalizados
 
-## Como identificar se a minha vari·vel tem distribuiÁ„o normal????
-## AtravÈs dos testes de normalidade como Kolmogorov-Smirnov e Shapiro-Wilk
-## VocÍs j· aprenderam a analizar estes testes no curso Modelos de regress„o linear - mÛdulo 1
+## Como identificar se a minha vari√°vel tem distribui√ß√£o normal????
+## Atrav√©s dos testes de normalidade como Kolmogorov-Smirnov e Shapiro-Wilk
+## Voc√™s j√° aprenderam a analizar estes testes no curso Modelos de regress√£o linear - m√≥dulo 1
 
-## Os modelos lineares generalizados s„o utilizados para analizar
-## vari·veis que possuem distribuiÁ„o n„o normal tais como:
-## dados bin·rios, dados de contagem, probabilidades, proporÁıes, etc
+## Os modelos lineares generalizados s√£o utilizados para analizar
+## vari√°veis que possuem distribui√ß√£o n√£o normal tais como:
+## dados bin√°rios, dados de contagem, probabilidades, propor√ß√µes, etc
 
 ## Leitura dos dados
-dados<-read.table("C:/Users/Mateus/Desktop/Curso de regress„o no R/tuberculose-dados-all.csv",h=T,sep=";")
+dados<-read.table("caminhododiretorio/tuberculose-dados-all.csv",h=T,sep=";")
 
 # Sumarizar os dados
 library(dplyr)
@@ -23,10 +23,10 @@ continuous <- select_if(dados, is.numeric)
 statistics<-summary(continuous)
 write.csv(statistics, "dados-tuberculose-reg-stat.csv")
 
-# Rodando o modelo para analizar o uso de smartphone pela populaÁ„o
-# Para este tipo de modelo a distribuiÁ„o utilizada È binomial
-# family - distribuiÁ„o dos nossos dados
-# documentaÁ„o https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/glm
+# Rodando o modelo para analizar o uso de smartphone pela popula√ß√£o
+# Para este tipo de modelo a distribui√ß√£o utilizada √© binomial
+# family - distribui√ß√£o dos nossos dados
+# documenta√ß√£o https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/glm
 
 #Renomear GTA
 colnames(dados)[1]<-("GTA")
@@ -51,14 +51,14 @@ summary(glm3)
 library(ResourceSelection)
 hoslem.test(dados$tuberculosis_cat, fitted(glm1))
 
-# Fazendo prediÁıes
+# Fazendo predi√ß√µes
 teste<-data.frame(Sexo=c(1,1,2,2),Idade=c(30,65,40,58), Smartphone=c(0,1,1,1))
 predict <- predict(glm1, dados, type = 'response')
 predict
 
 # predict - ele vai dar um numero entre 0 e 1 assim, maior que 0.5 vai ser meu 1
 # menor que 0.5 meu 0 logo, um valor 0.34 significa minha classe 0
-# nesse exemplo, 0 usa smarthphone, e 1 n„o usa smarthphone
+# nesse exemplo, 0 usa smarthphone, e 1 n√£o usa smarthphone
 
 #              1         2         3         4 
 #           0.1051911 0.9690878 0.3670668 0.9111694
@@ -66,7 +66,7 @@ predict
 #           acertou    acertou    errou     acertou
 # https://www.rdocumentation.org/packages/car/versions/3.0-10/topics/Predict
 
-# Matrix de confus„o
+# Matrix de confus√£o
 dados_conf_matrix <- table(dados$tuberculosis_cat, predict > 0.5)
 dados_conf_matrix
 
@@ -74,18 +74,18 @@ dados_conf_matrix
 #      FALSE TRUE
 ##0     1    0
 ##1     1    2
-# o modelo classificou uma errada a diagonal principal È o que o modelo acertou
+# o modelo classificou uma errada a diagonal principal √© o que o modelo acertou
 ###     FALSE TRUE
 ##0      1    0  linha classe zero
 ##1    - 1 -   2 linha classe um
-###    aqui È o erro
+###    aqui √© o erro
 ###
 
-# Calculando a acur·cia
+# Calculando a acur√°cia
 acuracia <- sum(diag(dados_conf_matrix)) / sum(dados_conf_matrix)
 acuracia
 
-# Calculando a precis„o
+# Calculando a precis√£o
 precision <- function(matrix) {
   # True positive
   tp <- matrix[2, 2]
