@@ -1,9 +1,9 @@
-## Curso Modelos de regress„o no software R - MÛdulo 1 ##
+## Curso Modelos de regress√£o no software R - M√≥dulo 1 ##
 
 ## Modelos mistos lineares ##
 
 ## Leitura dos dados
-dados<-read.table("C:/Users/Mateus/Desktop/Curso de regress„o no R/dados.csv",h=T,sep=",")
+dados<-read.table("caminhododiretorio/Curso de regress√£o no R/dados.csv",h=T,sep=",")
 
 ## Rodando modelos mistos utilizando o pacote lme4
 library(lme4)
@@ -14,10 +14,10 @@ modelo = lmer(PROD ~ Trat + (1 | Rep), data = dados)
 summary.modelo <- summary(modelo)
 summary.modelo
 
-## Calculando o intervalo de confianÁa
+## Calculando o intervalo de confian√ßa
 confint(modelo)
 
-## Estimativas dos efeitos aleatÛrios
+## Estimativas dos efeitos aleat√≥rios
 ranef(modelo)$Rep 
 coef(modelo)$Rep 
 
@@ -29,7 +29,7 @@ REsim(modelo)             # mean, median and sd of the random effect estimates
 
 plotREsim(REsim(modelo))  # plot the interval estimates
 
-## Fazendo prediÁıes
+## Fazendo predi√ß√µes
 predict(modelo, re.form=NA)
 predict(modelo)
 
@@ -43,7 +43,7 @@ anova.df$Sigma <- stats::sigma(modelo)
 # Renomeando a coluna do p-value
 colnames(anova.df)[which(colnames(anova.df) == "Pr..F.")] <- "P.value"
 
-# Criando um ranking de signific„ncia
+# Criando um ranking de signific√£ncia
 anova.df$Sig <- ifelse(anova.df$P.value <= 0.1 & anova.df$P.value >= 0.05,
                        ".","")
 anova.df$Sig <- ifelse(anova.df$P.value < 0.05 & anova.df$P.value >= 0.01,
@@ -52,10 +52,10 @@ anova.df$Sig <- ifelse(anova.df$P.value < 0.01 & anova.df$P.value >= 0.001,
                        "**",anova.df$Sig)
 anova.df$Sig <- ifelse(anova.df$P.value < 0.001,"***",anova.df$Sig)
 
-##Estimando o coeficiente de variaÁ„o CV
+##Estimando o coeficiente de varia√ß√£o CV
 anova.df$CV <- (anova.df$Sigma/mean(dados$PROD))*100
 
-##Calculando os contrastes entre mÈdias dos efeitos fixos
+##Calculando os contrastes entre m√©dias dos efeitos fixos
 delta.df<-data.frame(summary(pairs(emmeans::lsmeans(modelo,
                                                     as.formula(~ Trat),
                                                     adjust = "none",
@@ -66,7 +66,7 @@ colnames(delta.df)[which(colnames(delta.df) == "contrast")] <- "Contrast"
 colnames(delta.df)[which(colnames(delta.df) == "estimate")] <- "Estimate"
 colnames(delta.df)[which(colnames(delta.df) == "p.value")] <- "P.value"
 
-# Calculando o intervalo de confianÁa
+# Calculando o intervalo de confian√ßa
 delta.df$Lower.95.CI <- delta.df$Estimate - qt(p = 1-0.05/2, df = delta.df$DF)*delta.df$SE
 delta.df$Upper.95.CI <- delta.df$Estimate + qt(p = 1-0.05/2, df = delta.df$DF)*delta.df$SE
 delta.df$Lower.90.CI <- delta.df$Estimate - qt(p = 1-0.10/2, df = delta.df$DF)*delta.df$SE
@@ -93,7 +93,7 @@ lsmean.df$T.value = lsmean.df$Estimate/lsmean.df$SE
 # Adicionando o p value para o teste t
 lsmean.df$P.value <- pt(abs(lsmean.df$T.value),df = lsmean.df$DF, lower.tail = F)*2
 
-# Trocando os n˙meros da coluna Letter.group por letras
+# Trocando os n√∫meros da coluna Letter.group por letras
 lsmean.df$Letter.Group<-as.character(lsmean.df$Letter.Group)
 lsmean.df$Letter.Group<-gsub(" ","", lsmean.df$Letter.Group, fixed = T)
 lsmean.df <- within(lsmean.df, Letter.Group[Letter.Group == "1"] <- 'a')
@@ -129,6 +129,6 @@ lsmean.df <- within(lsmean.df, Letter.Group[Letter.Group == "67"] <- 'fg')
 lsmean.df <- within(lsmean.df, Letter.Group[Letter.Group == "678"] <- 'fgh')
 lsmean.df <- within(lsmean.df, Letter.Group[Letter.Group == "78"] <- 'gh')
 
-## ExercÌcios
-# Crie modelos lineares mistos com tratamento como efeito fixo e as demais vari·veis como efeito aleatÛrio
+## Exerc√≠cios
+# Crie modelos lineares mistos com tratamento como efeito fixo e as demais vari√°veis como efeito aleat√≥rio
 # Depois verifique qual modelo foi melhor
