@@ -1,21 +1,21 @@
-## Curso Modelos de regress„o no software R - MÛdulo 1 ##
+## Curso Modelos de regress√£o no software R - M√≥dulo 1 ##
 
-## ResoluÁ„o dos exercÌcios de Modelo de Regress„o linear simples e m˙ltipla, e seleÁ„o de modelos ##
+## Resolu√ß√£o dos exerc√≠cios de Modelo de Regress√£o linear simples e m√∫ltipla, e sele√ß√£o de modelos ##
 
 ## Leitura dos dados
-dados<-read.table("C:/Users/hp/OneDrive - Experimental Analytics Corporation/Short course/Modelos de regress„o no software R - MÛdulo 1/dados.csv",h=T,sep=",")
+dados<-read.table("caminhododiretorio/Modelos de regress√£o no software R - M√≥dulo 1/dados.csv",h=T,sep=",")
 
 resultados<-list()
 for(i in 3:ncol(dados))
 {
   Resp_var<-dados[,i]
-  vari·vel_independente<-dados[,-i]
+  vari√°vel_independente<-dados[,-i]
   
   ## Rodando modelo linear usando lm
-  m1 <- lm(Resp_var~., data=vari·vel_independente)
+  m1 <- lm(Resp_var~., data=vari√°vel_independente)
   summary(m1)
   
-  # SeleÁ„o de modelos/vari·veis
+  # Sele√ß√£o de modelos/vari√°veis
   step(m1, direction="both")
   
   modelo_selecionado1 <- step(m1)
@@ -38,7 +38,7 @@ for(i in 3:ncol(dados))
   
   car::vif(modelo_selecionado2)
   
-  # Selecionando vari·veis
+  # Selecionando vari√°veis
   all_vars <- names(modelo_selecionado2[[1]])[-1]  # names of all X variables
   # Get the non-significant vars
   summ <- summary(modelo_selecionado2)  # model summary
@@ -98,4 +98,4 @@ for(i in 3:ncol(dados))
   
 }
 
-capture.output(resultados, file = "C:/Users/hp/OneDrive - Experimental Analytics Corporation/Short course/Modelos de regress„o no software R - MÛdulo 1/Resultados.txt")
+capture.output(resultados, file = "caminhododiretorio/Modelos de regress√£o no software R - M√≥dulo 1/Resultados.txt")
