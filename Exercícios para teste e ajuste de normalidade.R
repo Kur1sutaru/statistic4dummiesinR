@@ -1,13 +1,13 @@
-## Curso Modelos de regressão no software R - Módulo 1 ##
-## Resolução dos exercícios de teste de normalidade e remoção de outlier ##
+## Curso Modelos de regressÃ£o no software R - MÃ³dulo 1 ##
+## ResoluÃ§Ã£o dos exercÃ­cios de teste de normalidade e remoÃ§Ã£o de outlier ##
 
-## Exercício
-## Faça o teste de normalidade e remoção de outlier para todas as variáveis
+## ExercÃ­cio
+## FaÃ§a o teste de normalidade e remoÃ§Ã£o de outlier para todas as variÃ¡veis
 
 ## Leitura dos dados
-dados<-read.table("C:/Users/hp/OneDrive - Experimental Analytics Corporation/Short course/Modelos de regressão no software R - Módulo 1/dados.csv",h=T,sep=",")
+dados<-read.table("caminhododiretorio/Modelos de regressÃ£o no software R - MÃ³dulo 1/dados.csv",h=T,sep=",")
 
-##Rodando teste de normalidade, curtose, simetria e homogeneidade de variância para todas as características
+##Rodando teste de normalidade, curtose, simetria e homogeneidade de variÃ¢ncia para todas as caracterÃ­sticas
 resultado<-list()
 for(i in 3:ncol(dados))
 {
@@ -25,7 +25,7 @@ for(i in 3:ncol(dados))
   bt<-bartlett.test(dados[,i]~dados$Trat, dados)
   
   ## Montando o dataframe
-  resultado[[i]]<-data.frame(Característica=colnames(dados[i]),
+  resultado[[i]]<-data.frame(CaracterÃ­stica=colnames(dados[i]),
                       Curtose=kur,Simetria=ske,
                       Kol_Teste=kst$p.value,Sha_Teste=sht$p.value,
                       Bar_Teste=bt$p.value)
@@ -41,7 +41,7 @@ for(i in 3:ncol(dados))
   dados[,i]<-ifelse(!dados[,i] %in% boxplot.stats(dados[,i])$out,dados[,i],NA) 
 }
 
-write.table(resultado_final,"C:/Users/hp/OneDrive - Experimental Analytics Corporation/Short course/Modelos de regressão no software R - Módulo 1/Teste_de_normalidade.csv",row.names=F, quote=F,sep=",")
-write.table(dados,"C:/Users/hp/OneDrive - Experimental Analytics Corporation/Short course/Modelos de regressão no software R - Módulo 1/dados_novo.csv",row.names=F,quote=F,sep=",")
+write.table(resultado_final,"caminhododiretorio/Modelos de regressÃ£o no software R - MÃ³dulo 1/Teste_de_normalidade.csv",row.names=F, quote=F,sep=",")
+write.table(dados,"caminhododiretorio/Modelos de regressÃ£o no software R - MÃ³dulo 1/dados_novo.csv",row.names=F,quote=F,sep=",")
 
 
