@@ -1,60 +1,60 @@
-## Curso Modelos de regress„o no software R - MÛdulo 1 ##
-## Modelo de Regress„o linear simples e m˙ltipla, e seleÁ„o de modelos ##
+## Curso Modelos de regress√£o no software R - M√≥dulo 1 ##
+## Modelo de Regress√£o linear simples e m√∫ltipla, e sele√ß√£o de modelos ##
 
-## Modelo de regress„o linear simples
+## Modelo de regress√£o linear simples
 
 ## Leitura dos dados
-dados<-read.table("C:/Users/Mateus/Desktop/Curso de regress„o no R/dados.csv",h=T,sep=",")
+dados<-read.table("caminhododiretorio/Curso de regress√£o no R/dados.csv",h=T,sep=",")
 
 ## modelo y = B0 + B1X + e
-#y - vari·vel resposta
+#y - vari√°vel resposta
 #B0 - coeficiente linear da reta
 #B1 - coeficiente angular da reta
-#X - vari·vel independente
+#X - vari√°vel independente
 #e - erro experimental
 
 ##Produtividade
-##Modelo de regress„o no R
+##Modelo de regress√£o no R
 reglin<-lm(PROD~Trat, dados)
 
 anova(reglin)
 
 summary(reglin)
 
-##PrediÁ„o via modelo de regress„o
+##Predi√ß√£o via modelo de regress√£o
 predict(reglin)
 
-##Plotando a regress„o
-plot(dados$Trat, dados$PROD) #diagrama de dispers„o
-abline(reglin) #reta da regress„o ajustada
+##Plotando a regress√£o
+plot(dados$Trat, dados$PROD) #diagrama de dispers√£o
+abline(reglin) #reta da regress√£o ajustada
 
-##Rodando com as mÈdias dos tratamentos
+##Rodando com as m√©dias dos tratamentos
 dados1<-aggregate(dados[, 3:ncol(dados)], list(Trat=dados$Trat), mean)
 
-##Modelo de regress„o no R
+##Modelo de regress√£o no R
 reglin<-lm(PROD~Trat, dados1)
 
 anova(reglin)
 
 summary(reglin)
 
-##PrediÁ„o via modelo de regress„o
+##Predi√ß√£o via modelo de regress√£o
 predict(reglin)
 
-##Plotando a regress„o
-plot(dados1$Trat, dados1$PROD) #diagrama de dispers„o
-abline(reglin) #reta da regress„o ajustada
+##Plotando a regress√£o
+plot(dados1$Trat, dados1$PROD) #diagrama de dispers√£o
+abline(reglin) #reta da regress√£o ajustada
 
-# quanto mais variaveis o coef de determinaÁ„o aumenta Multiple R squared
-# n„o usar essa mÈtrica usar o coef deter ajustado adjusted r-squared
+# quanto mais variaveis o coef de determina√ß√£o aumenta Multiple R squared
+# n√£o usar essa m√©trica usar o coef deter ajustado adjusted r-squared
 # adjusted r-squared pondera o coef de acordo com o num de variaveis
 # as vezes inserir mais um novo parametro nao ajuda a explicar o modelo
-## seleÁ„o de modelos logo a seguir
+## sele√ß√£o de modelos logo a seguir
 
-##Regress„o m˙ltipla
+##Regress√£o m√∫ltipla
 dados2<-data.frame(dados, TRAT2=dados$Trat^2, TRAT3=dados$Trat^3, TRATr=sqrt(dados$Trat), TRATl=log(dados$Trat), TRATi=1/dados$Trat, TRATi2=1/dados$Trat^2)
 
-# ajuste do modelo quadr·tico
+# ajuste do modelo quadr√°tico
 m1 <- lm(PROD~Trat+TRAT2, data=dados2) # ou lm(PROD~Trat+I(TRAT^2), data=dados2)
 summary(m1)
 layout(matrix(c(1,1,2,3,4,5),2,3))
@@ -62,7 +62,7 @@ plot(PROD~Trat, dados2)
 lines(fitted(m1)~Trat, dados2)
 plot(m1)
 
-# ajuste do modelo c˙bico
+# ajuste do modelo c√∫bico
 m2 <- lm(PROD~Trat+TRAT2+TRAT3, data=dados2) # ou lm(PROD~Trat+I(TRAT^2)+I(TRAT^3), data=dados2)
 summary(m2)
 layout(matrix(c(1,1,2,3,4,5),2,3))
@@ -71,7 +71,7 @@ lines(fitted(m2)~Trat, dados2)
 plot(m2)
 
 # variavel independente + 1/variavel
-# ajuste do modelo recÌproco
+# ajuste do modelo rec√≠proco
 m3 <- lm(PROD~Trat+TRATi, data=dados2) 
 summary(m3)
 layout(matrix(c(1,1,2,3,4,5),2,3))
@@ -79,7 +79,7 @@ plot(PROD~Trat, dados2)
 lines(fitted(m3)~Trat, dados2)
 plot(m3)
 
-# ajuste do modelo quadrado do recÌproco
+# ajuste do modelo quadrado do rec√≠proco
 m4 <- lm(PROD~Trat+TRATi2, data=dados2) 
 summary(m4)
 layout(matrix(c(1,1,2,3,4,5),2,3))
@@ -103,11 +103,11 @@ plot(PROD~Trat, dados2)
 lines(fitted(m6)~Trat, dados2)
 plot(m6)
 
-# entender o coef de determinaÁ„o ajustado
+# entender o coef de determina√ß√£o ajustado
 # Adjusted R-squared
 
-##SeleÁ„o de modelos
-# ajuste do modelo global (todas as vari·veis)
+##Sele√ß√£o de modelos
+# ajuste do modelo global (todas as vari√°veis)
 m7 <- lm(PROD~Trat+TRAT2+TRAT3+TRATr+TRATl+TRATi+TRATi2, data=dados2)
 summary(m7)
 layout(matrix(c(1,1,2,3,4,5),2,3))
@@ -115,21 +115,21 @@ plot(PROD~Trat, dados2)
 lines(fitted(m7)~Trat, dados2)
 plot(m7)
 
-# explicaÁ„o dos gr·ficos
+# explica√ß√£o dos gr√°ficos
 # https://data.library.virginia.edu/diagnostic-plots/
 
-# SeleÁ„o de modelos/vari·veis
+# Sele√ß√£o de modelos/vari√°veis
 step(m7, direction="both")
 step(m7, direction="both", k=log(nrow(dados2)))
 
-# o melhor modelo È a ultima linha
+# o melhor modelo √© a ultima linha
 # Coefficients:
 # (Intercept)         Trat  
 #        77.5          8.5  
 
 # O modelo linear foi escolhido como o melhor
 
-# MODELO COM TODAS AS VARI¡VEIS
+# MODELO COM TODAS AS VARI√ÅVEIS
 lmMod <- lm(PROD ~ . , data = dados2)
 selectedMod <- step(lmMod)
 summary(selectedMod)
@@ -157,7 +157,7 @@ car::vif(selectedMod1)
 # o script acima exclui do nosso modelo todos os que possuem multicolinearidade
 # maior que 100 - foi setado ali while(any(all_vifs > 100)){
 
-# Selecionando vari·veis
+# Selecionando vari√°veis
 all_vars <- names(selectedMod1[[1]])[-1]  # names of all X variables
 # Get the non-significant vars
 summ <- summary(selectedMod1)  # model summary
@@ -214,5 +214,5 @@ summary(selectedMod4)
 # ANOVA
 anova(m7, selectedMod1, selectedMod2, selectedMod3, selectedMod4)
 
-## ExercÌcio sobre regress„o linear simples e m˙ltipla, e seleÁ„o de modelos.
-## FaÁa as an·lises de regress„o simples e m˙ltipla, e seleÁ„o de modelos para todas as vari·veis independentes.
+## Exerc√≠cio sobre regress√£o linear simples e m√∫ltipla, e sele√ß√£o de modelos.
+## Fa√ßa as an√°lises de regress√£o simples e m√∫ltipla, e sele√ß√£o de modelos para todas as vari√°veis independentes.
